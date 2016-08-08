@@ -132,6 +132,7 @@ public class GuestbookDao {
 				String name = rs.getString( 2 );
 				String content = rs.getString( 3 );
 				String regDate = rs.getString( 4 );
+
 				
 				GuestbookVo vo = new GuestbookVo();
 				vo.setNo(no);
