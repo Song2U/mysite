@@ -2,8 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	String result = request.getParameter("res");
 	UserVo userVo = (UserVo) request.getAttribute("userVo");
 %>
+
 <!doctype html>
 <html>
 <head>
@@ -11,6 +13,13 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/mysite/assets/css/user.css" rel="stylesheet"
 	type="text/css">
+<script>
+	
+<%if ("success".equals(result)) {%>
+	alert("성공적으로 수정하였습니다.");
+<%}%>
+	
+</script>
 </head>
 <body>
 	<div id="container">
@@ -38,7 +47,7 @@
 						%>
 						<label>여</label> <input type="radio" name="gender" value="FEMALE">
 						<label>남</label> <input type="radio" name="gender" value="MALE"
-							checked="checked">%>
+							checked="checked">
 						<%
  	}
  %>

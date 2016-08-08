@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	UserVo authUser = (UserVo)session.getAttribute("authUser");
+	
 %>
 <div id="header">
 	<h1>MySite</h1>

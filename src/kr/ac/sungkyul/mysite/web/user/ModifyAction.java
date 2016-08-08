@@ -42,6 +42,8 @@ public class ModifyAction implements Action {
 		UserDao dao = new UserDao();
 		dao.update(vo);
 
-		WebUtil.redirect("/mysite/user?a=modifyform", request, response);
+		// 세션 정보 수정
+		authUser.setName(name); // 포맷에 넘어온 정보로 이름값을 재설정
+		WebUtil.redirect("/mysite/user?a=modifyform&res=success", request, response);
 	}
 }
