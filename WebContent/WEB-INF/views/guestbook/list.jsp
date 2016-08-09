@@ -1,28 +1,36 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@page import="kr.ac.sungkyul.mysite.vo.GuestbookVo"%>
 <%@page import="java.util.List"%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%
-	List<GuestbookVo> list 
-		= (List<GuestbookVo>)request.getAttribute( "list" );
+	pageContext.setAttribute("newLine", "\n");
+%>
+<%
+	List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
 %>
 <!doctype html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link href="/mysite/assets/css/guestbook.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
 				<form action="/mysite/guestbook" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
-							<td>이름</td><td><input type="text" name="name"></td>
-							<td>비밀번호</td><td><input type="password" name="pass"></td>
+							<td>이름</td>
+							<td><input type="text" name="name"></td>
+							<td>비밀번호</td>
+							<td><input type="password" name="pass"></td>
 						</tr>
 						<tr>
 							<td colspan=4><textarea name="content" id="content"></textarea></td>
@@ -33,35 +41,28 @@
 					</table>
 				</form>
 				<ul>
-				<%
-					int count = list.size();
-					int index = 0;
-					for( GuestbookVo vo : list ) {
-				%>				
-					<li>
-						<table>
-							<tr>
-								<td>[<%=count-index++ %>]</td>
-								<td><%=vo.getName()%></td>
-								<td><%=vo.getRegDate()%></td>
-								<td><a href="/mysite/guestbook?a=deleteform&no=<%=vo.getNo() %>">삭제</a></td>
-							</tr>
-							<tr>
-								<td colspan=4>
-								<%=vo.getContent().replaceAll("\n", "<br>") %>	
-								</td>
-							</tr>
-						</table>
-						<br>
-					</li>
-				<%
-					}
-				%>	
+					<c:set var='countList' value='${fn:length(list) }' />
+					<c:forEach var='vo' items='${list}' varStatus='status'>
+						<li>
+							<table>
+								<tr>
+									<td>[${countList - status.index}]</td>
+									<td>${vo.name }</td>
+									<td>${vo.regDate }</td>
+									<td><a href="/mysite/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
+								</tr>
+								<tr>
+									<td colspan=4>
+									${fn:replace(vo.content, newLine, "<br>") }</td> 
+								</tr>
+							</table> <br>
+						</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/navi.jsp"/>
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+		<jsp:include page="/WEB-INF/views/include/navi.jsp" />
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
 </body>
 </html>
