@@ -2,6 +2,7 @@ package kr.ac.sungkyul.mysite.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,6 +23,50 @@ public class BoardDao {
 		}
 
 		return conn;
+	}
+
+	public BoardVo get(Long contentNo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardVo vo = new BoardVo();
+
+		try {
+			conn = getConnection();
+
+			String sql = "select no, title, content from board where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, contentNo);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String content = rs.getString(3);
+
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContent(content);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;
 	}
 
 	public List<BoardVo> getList() {

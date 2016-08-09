@@ -15,7 +15,10 @@ delete BOARD;
 
 insert into board values(seq_board.nextval, '테스트 게시글 입니다.', '테스트 Test', sysdate, 0, 1, 1, 1, 4);
 insert into board values(seq_board.nextval, '이건 테스트에요', 'Test is 테스트', sysdate, 0, 1, 1, 1, 3);
+insert into board values(seq_board.nextval, '테스트지롱', '테스트 테스트\n테테테테테테스트', sysdate, 0, 1, 1, 1, 3);
+insert into board values(seq_board.nextval, '아직 글쓰기가 안 된다앙', '테스트 <br> 테스트', sysdate, 0, 1, 1, 1, 3);
 
 select board.no, board.title, board.content, to_char(board.reg_date, 'yyyy-mm-dd pm hh:mi:ss'), board.VIEW_COUNT, USERS.NAME from BOARD, users where BOARD.USER_NO=USERS.NO order by BOARD.NO desc;
 
+select no, title, content from board where no=1;
 commit;

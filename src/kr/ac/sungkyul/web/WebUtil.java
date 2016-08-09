@@ -25,6 +25,6 @@ public class WebUtil {
 		
 		RequestDispatcher rd = 
 				request.getRequestDispatcher( path );
-		rd.forward( request, response);
+		rd.forward(request, response);
 	}
 }

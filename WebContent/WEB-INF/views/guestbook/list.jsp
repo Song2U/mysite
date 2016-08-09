@@ -7,9 +7,7 @@
 <%
 	pageContext.setAttribute("newLine", "\n");
 %>
-<%
-	List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
-%>
+
 <!doctype html>
 <html>
 <head>
