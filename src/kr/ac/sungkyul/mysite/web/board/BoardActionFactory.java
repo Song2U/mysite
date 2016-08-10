@@ -8,12 +8,18 @@ public class BoardActionFactory extends ActionFactory {
 	@Override
 	public Action getAction(String actionName) {
 		Action action = null;
-		if("view".equals(actionName)){
+		if ("view".equals(actionName)) {
 			action = new ViewAction();
-		}else{
+		} else if ("modifyform".equals(actionName)) {
+			action = new ModifyFormAction();
+		} else if ("writeform".equals(actionName)) {
+			action = new WriteFormAction();
+		} else if("write".equals(actionName)){
+			action = new WriteAction();
+		} 
+		else {
 			action = new BoardListAction();
 		}
 		return action;
 	}
-
 }

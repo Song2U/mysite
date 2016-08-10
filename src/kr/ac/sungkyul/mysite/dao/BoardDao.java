@@ -25,6 +25,42 @@ public class BoardDao {
 		return conn;
 	}
 
+	public boolean insert(BoardVo vo){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		
+		try{
+			conn = getConnection();
+						//								번호			 제목   내용    작성일	조회수		그룹 번호						그룹내순서  깊이  회원번호
+			String sql = "insert into board values(seq_board.nextval, ?, ?, sysdate, 0, nvl(select max(group_no) from board, 0), 1, 1, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContent());
+			pstmt.setLong(3, );
+			
+			count = pstmt.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}finally {
+			try {
+				if( pstmt != null ) {
+					pstmt.close();
+				}
+				if( conn != null ) {
+					conn.close();
+				}
+			} catch( SQLException e ) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return (count == 1);
+	}
+	
 	public BoardVo get(Long contentNo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

@@ -28,5 +28,4 @@ public class InsertAction implements Action {
 		
 		response.sendRedirect( "/mysite/guestbook" );
 	}
-
 }
