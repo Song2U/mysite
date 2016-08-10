@@ -16,7 +16,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="/mysite/board">
-					<input type = "hidden" name = "a" value="writeform">
+					<input type = "hidden" name = "a" value="write">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -34,7 +34,7 @@
 					</table>
 					<div class="bottom">
 						<a href="/mysite/board">취소</a>
-						<a href="/mysite/board?a=insert">등록</a>
+						<input type="submit" value="등록">
 					</div>
 				</form>				
 			</div>

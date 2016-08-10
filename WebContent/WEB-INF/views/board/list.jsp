@@ -46,12 +46,19 @@
 				<div class="pager">
 					<ul>
 						<li><a href="">◀</a></li>
+						<c:forEach begin='${beginPage }' end='${endPage }' step='1' var='i'>
+						<c:choose>
+						<c:when test='${currentPage==i }'>
 						<li class="selected"><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
-						<li><a href="">4</a></li>
-						<li><a href="">5</a></li>
-						<li><a href="">▶</a></li>
+						</c:when>
+						<c:otherwise>
+						<li><a href="/mysite/board?a=list&p=${i}">${i}</a></li>
+						</c:otherwise>
+						</c:choose>
+						</c:forEach>
+						<c:if test='${endPage<total }'>
+						<li><a href="/mysite/board?a=list&p=${endPage + 1}">▶</a></li>
+						</c:if>
 					</ul>
 				</div>
 				<!-- end:paging -->
