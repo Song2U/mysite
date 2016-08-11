@@ -26,6 +26,7 @@ public class ViewAction implements Action {
 		request.setAttribute("board", vo);
 		request.setAttribute("no", no);
 		request.setAttribute("authUser", authUser);
+		dao.viewCount(no);
 		WebUtil.forward("/WEB-INF/views/board/view.jsp", request, response);
 	}
 }
