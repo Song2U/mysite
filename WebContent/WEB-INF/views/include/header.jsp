@@ -6,7 +6,7 @@
 	pageEncoding="UTF-8"%>
 
 <div id="header">
-	<h1>MySite</h1>
+	<h1><a href="/mysite/main">MySite</a></h1>
 	<ul>
 		<c:choose>
 		

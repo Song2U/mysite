@@ -38,7 +38,10 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="/mysite/board">글목록</a> <a href="/mysite/board?a=modifyform&no=${board.no}">글수정</a>
+					<a href="/mysite/board">글목록</a>
+					<c:if test="${board.userNo==authUser.no }">
+					<a href="/mysite/board?a=modifyform&no=${board.no}">글수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

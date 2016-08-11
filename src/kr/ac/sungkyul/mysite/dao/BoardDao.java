@@ -28,7 +28,6 @@ public class BoardDao {
 	public void insert(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
 		try {
 			conn = getConnection();
 
@@ -66,7 +65,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			String sql = "select no, title, content from board where no=?";
+			String sql = "select no, title, content, user_no from board where no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, contentNo);
 			rs = pstmt.executeQuery();
@@ -75,10 +74,12 @@ public class BoardDao {
 				Long no = rs.getLong(1);
 				String title = rs.getString(2);
 				String content = rs.getString(3);
+				Long userNo = rs.getLong(4);
 
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setContent(content);
+				vo.setUserNo(userNo);
 
 			}
 		} catch (SQLException e) {
@@ -111,7 +112,7 @@ public class BoardDao {
 			conn = getConnection();
 			stmt = conn.createStatement();
 
-			String sql = "select board.no, board.title, board.content, to_char(board.reg_date, 'yyyy-mm-dd pm hh:mi:ss'), board.VIEW_COUNT, USERS.NAME from BOARD, users where BOARD.USER_NO=USERS.NO order by BOARD.NO desc";
+			String sql = "select board.no, board.title, board.content, to_char(board.reg_date, 'yyyy-mm-dd pm hh:mi:ss'), board.VIEW_COUNT, USERS.NAME, Board.user_no from BOARD, users where BOARD.USER_NO=USERS.NO order by BOARD.NO desc";
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				Long no = rs.getLong(1);
@@ -120,6 +121,7 @@ public class BoardDao {
 				String regDate = rs.getString(4);
 				Long viewCount = rs.getLong(5);
 				String userName = rs.getString(6);
+				Long userNo = rs.getLong(7);
 
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
@@ -128,6 +130,7 @@ public class BoardDao {
 				vo.setRegDate(regDate);
 				vo.setViewCount(viewCount);
 				vo.setUserName(userName);
+				vo.setUserNo(userNo);
 
 				list.add(vo);
 			}
@@ -151,6 +154,37 @@ public class BoardDao {
 		return list;
 	}
 
+	public void delete(Long no){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+
+			String sql = "delete from BOARD where no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, no);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public void update(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -160,14 +194,14 @@ public class BoardDao {
 
 			String title = vo.getTitle();
 			String content = vo.getContent();
-			Long userNo = vo.getUserNo();
+			Long no = vo.getNo();
 
 			String sql = "update BOARD set title=?, CONTENT=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
-			pstmt.setLong(3, userNo);
+			pstmt.setLong(3, no);
 
 			pstmt.executeUpdate();
 
