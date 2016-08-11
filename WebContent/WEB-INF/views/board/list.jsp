@@ -4,6 +4,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +19,8 @@
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type="submit" value="찾기">
+					<input type="text" id="kwd" name="kwd" value=""> <input
+						type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -33,7 +34,11 @@
 					<c:forEach var='vo' items='${boardlist }'>
 						<tr>
 							<td>[${vo.no }]</td>
-							<td><a href="/mysite/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<td style="text-align:left;padding-left:${(vo.depth-1)*10}px"><a
+								href="/mysite/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<c:if test='${vo.depth > 1 }'>
+								<img src="">
+							</c:if>
 							<td>${vo.userName}</td>
 							<td>${vo.viewCount }</td>
 							<td>${vo.regDate }</td>
@@ -46,18 +51,19 @@
 				<div class="pager">
 					<ul>
 						<li><a href="">◀</a></li>
-						<c:forEach begin='${beginPage }' end='${endPage }' step='1' var='i'>
-						<c:choose>
-						<c:when test='${currentPage==i }'>
-						<li class="selected"><a href="">1</a></li>
-						</c:when>
-						<c:otherwise>
-						<li><a href="/mysite/board?a=list&p=${i}">${i}</a></li>
-						</c:otherwise>
-						</c:choose>
+						<c:forEach begin='${beginPage }' end='${endPage }' step='1'
+							var='i'>
+							<c:choose>
+								<c:when test='${currentPage==i }'>
+									<li class="selected"><a href="">1</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="/mysite/board?a=list&p=${i}">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 						<c:if test='${endPage<total }'>
-						<li><a href="/mysite/board?a=list&p=${endPage + 1}">▶</a></li>
+							<li><a href="/mysite/board?a=list&p=${endPage + 1}">▶</a></li>
 						</c:if>
 					</ul>
 				</div>

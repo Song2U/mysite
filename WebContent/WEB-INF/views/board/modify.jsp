@@ -24,7 +24,7 @@
 			<div id="board">
 				<form class="board-form" method="post" action="/mysite/board">
 				<input type="hidden" name="a" value="modifyform">
-				<input type="hidden" name="no" value="<%=no%>">
+				<input type="hidden" name="no" value="${vo.no }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
@@ -41,7 +41,8 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="">취소</a> <input type="submit" value="수정">
+						<a href="javascript:history.go(-1);">취소</a>
+						<input type="submit" value="수정">
 					</div>
 				</form>
 			</div>

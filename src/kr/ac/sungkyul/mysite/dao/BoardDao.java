@@ -150,4 +150,40 @@ public class BoardDao {
 		}
 		return list;
 	}
+
+	public void update(BoardVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+
+			String title = vo.getTitle();
+			String content = vo.getContent();
+			Long userNo = vo.getUserNo();
+
+			String sql = "update BOARD set title=?, CONTENT=? where no=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setLong(3, userNo);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
